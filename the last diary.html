@@ -90,7 +90,7 @@
             line-height: 1.7;
             color: #f0f0f0;
             white-space: pre-line;
-            min-height: 200px;
+            min-height: 150px;
         }
 
         /* Tombol navigasi */
@@ -275,13 +275,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        .footer-small {
-            text-align: center;
-            color: rgba(255,255,255,0.3);
-            font-size: 0.7rem;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
@@ -318,7 +311,7 @@
     const URL_NAMI = "https://d.top4top.io/p_381465w2o1.jpg";
     const URL_KUCING = "https://i.top4top.io/p_3814kmfwm1.png";
 
-    // ========== DATA GALLERY (ganti link gambar di sini) ==========
+    // ========== DATA GALLERY ==========
     const galleryData = [
         { caption: "moment dimana kita baru pertama kali bertemu", imgUrl: "https://i.top4top.io/p_38169z3hl1.jpeg" },
         { caption: "moment dimana kondisi kamu lagi ga baik", imgUrl: "https://j.top4top.io/p_3816zjf5m2.jpeg" },
@@ -517,7 +510,7 @@ cukup pernah terjadi saja.
 dan aku tetap bersyukur untuk itu.`
     };
 
-    // Teks penutup
+    // Teks penutup (LANGSUNG, tanpa "hal yang aku syukuri" lagi)
     const closingMessage = `dei.
 
 kalau kamu sudah sampai di bagian ini.
@@ -564,7 +557,7 @@ terima kasih ya, dei.
 
 — cahya 🌻`;
 
-    // Karakter dialog
+    // Karakter dialog (di Bawah pesan penutup)
     const karakterData = [
         { name: "🐱 Kucing", img: URL_KUCING, dialog: "meow." },
         { name: "🌸 Nami", img: URL_NAMI, dialog: "jadi sekarang gimana?" },
@@ -576,7 +569,6 @@ terima kasih ya, dei.
     ];
 
     // ========== VARIABLE GLOBAL ==========
-    let currentPage = 0;
     let typingInProgress = false;
 
     // ========== FUNGSI TYPING EFFECT ==========
@@ -755,13 +747,12 @@ terima kasih ya, dei.
             });
         }
         else if (pageNum === 8) {
+            // Halaman akhir: LANGSUNG closingMessage + karakter + tombol selesai
             pageDiv.innerHTML = `
                 <div class="card">
-                    <div class="typing-text" id="typingText8"></div>
+                    <div class="typing-text" id="closingText"></div>
                     
                     <div class="karakter-row" id="karakterRow"></div>
-                    
-                    <div class="typing-text" id="closingText" style="margin-top: 20px;"></div>
                     
                     <div class="btn-nav-group">
                         <button class="btn-nav btn-next btn-hidden" id="btnSelesai">✨ selesai ✨</button>
@@ -785,14 +776,10 @@ terima kasih ya, dei.
                 karakterRow.appendChild(div);
             });
             
-            // Type teks "hal yang aku syukuri"
-            const textElem = document.getElementById('typingText8');
-            typeText(textElem, pageTexts[7], 28, () => {
-                // Setelah selesai, type closing message
-                const closingElem = document.getElementById('closingText');
-                typeText(closingElem, closingMessage, 28, () => {
-                    document.getElementById('btnSelesai')?.classList.remove('btn-hidden');
-                });
+            // Type closing message
+            const closingElem = document.getElementById('closingText');
+            typeText(closingElem, closingMessage, 28, () => {
+                document.getElementById('btnSelesai')?.classList.remove('btn-hidden');
             });
             
             document.getElementById('btnSelesai')?.addEventListener('click', () => {
