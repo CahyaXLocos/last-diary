@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cahya Mirip Nnael · Worker Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     /* ----- RESET & GLOBAL ----- */
     * {
@@ -13,42 +16,55 @@
     }
 
     :root {
-      --bg: #f8f6f3;
-      --card: #ffffff;
-      --card-soft: #faf8f5;
-      --border: #e6e0d8;
-      --border-light: #d9d1c6;
-      --text: #2b2622;
-      --text-dim: #8a7f74;
-      --text-soft: #6b6158;
-      --accent: #c98a4b;          /* warm caramel */
-      --accent-glow: rgba(201, 138, 75, 0.18);
-      --green: #6b9e6b;           /* soft sage green */
-      --amber: #d49a3a;           /* warm amber */
-      --red-soft: #d17a6b;        /* muted coral */
+      --bg: #f7f3ee;
+      --bg-2: #efe8df;
+      --card: rgba(255, 255, 255, 0.75);
+      --card-solid: #ffffff;
+      --card-soft: rgba(252, 249, 245, 0.9);
+      --border: rgba(180, 160, 140, 0.28);
+      --border-strong: rgba(180, 160, 140, 0.45);
+      --text: #2a231d;
+      --text-dim: #8a7d6f;
+      --text-soft: #5f5448;
+      --accent: #c98a4b;
+      --accent-2: #e0b47c;
+      --accent-glow: rgba(201, 138, 75, 0.22);
+      --green: #5f9e6b;
+      --green-soft: #e6f0e7;
+      --amber: #cf9a3a;
+      --red-soft: #c96b5c;
+      --red-bg: #fdf1ee;
+      --radius-lg: 24px;
       --radius: 18px;
       --radius-sm: 12px;
-      --shadow: 0 8px 26px -10px rgba(0, 0, 0, 0.10);
-      --shadow-hover: 0 12px 32px -10px rgba(0, 0, 0, 0.15);
-      --transition: all 0.25s ease;
+      --shadow: 0 4px 20px -8px rgba(90, 70, 50, 0.12), 0 2px 8px -4px rgba(90, 70, 50, 0.08);
+      --shadow-hover: 0 12px 32px -12px rgba(90, 70, 50, 0.22), 0 4px 12px -6px rgba(90, 70, 50, 0.12);
+      --shadow-glow: 0 8px 28px -8px rgba(201, 138, 75, 0.35);
+      --transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      --spring: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     body {
       background: var(--bg);
-      background-image: radial-gradient(circle at 20% 0%, #fffbf5, #f3efe9 80%);
+      background-image:
+        radial-gradient(circle at 15% 5%, rgba(255, 245, 230, 0.9), transparent 45%),
+        radial-gradient(circle at 85% 15%, rgba(240, 230, 218, 0.7), transparent 40%),
+        radial-gradient(circle at 50% 100%, rgba(245, 238, 228, 0.8), transparent 50%);
+      background-attachment: fixed;
       color: var(--text);
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      padding: 24px 18px;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 28px 18px;
       min-height: 100vh;
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      line-height: 1.5;
+      line-height: 1.55;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     .container {
-      max-width: 720px;
+      max-width: 740px;
       width: 100%;
       margin: 0 auto;
     }
@@ -57,103 +73,142 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 28px;
+      gap: 14px;
+      margin-bottom: 30px;
       padding-left: 4px;
-      animation: fadeSlide 0.45s ease both;
+      animation: fadeSlide 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     }
 
     .brand-icon {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(145deg, #f0e4d4, #e2cfb8);
-      border-radius: 14px;
+      width: 54px;
+      height: 54px;
+      background: linear-gradient(145deg, #fff5e8, #ecd9c0);
+      border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
-      box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.12);
-      border: 1px solid #d9c3a8;
-      color: #8a6a44;
+      font-size: 28px;
+      box-shadow:
+        0 8px 20px -6px rgba(180, 140, 90, 0.28),
+        inset 0 1px 2px rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(217, 195, 168, 0.8);
+      color: #a87a44;
+      transition: var(--spring);
+      position: relative;
+    }
+
+    .brand-icon::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      background: linear-gradient(145deg, transparent 40%, rgba(255, 255, 255, 0.6));
+      pointer-events: none;
+    }
+
+    .brand-icon:hover {
+      transform: rotate(-6deg) scale(1.06);
+      box-shadow:
+        0 12px 26px -8px rgba(180, 140, 90, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.9);
     }
 
     .brand-text h1 {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      background: linear-gradient(to right, #3d342c, #6b5a4a);
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      background: linear-gradient(120deg, #3d342c 0%, #8a6a44 55%, #b88a52 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      line-height: 1.2;
+      line-height: 1.15;
     }
 
     .brand-text .sub {
       font-size: 11px;
-      font-weight: 400;
+      font-weight: 600;
       color: var(--text-dim);
-      letter-spacing: 0.8px;
+      letter-spacing: 1.6px;
       text-transform: uppercase;
-      margin-top: 2px;
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* ----- CARD ----- */
+    .brand-text .sub::before {
+      content: '';
+      width: 18px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius: 2px;
+    }
+
+    /* ----- CARD (GLASSMORPHISM) ----- */
     .card {
       background: var(--card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px 20px;
+      border-radius: var(--radius-lg);
+      padding: 24px 22px;
       margin-bottom: 18px;
       box-shadow: var(--shadow);
       transition: var(--transition);
-      animation: fadeSlide 0.45s ease both;
+      animation: fadeSlide 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      position: relative;
     }
 
-    .card:nth-child(2) { animation-delay: 0.05s; }
-    .card:nth-child(3) { animation-delay: 0.1s; }
-    .card:nth-child(4) { animation-delay: 0.15s; }
+    .card:nth-child(2) { animation-delay: 0.08s; }
+    .card:nth-child(3) { animation-delay: 0.16s; }
+    .card:nth-child(4) { animation-delay: 0.24s; }
 
     .card:hover {
-      border-color: var(--border-light);
+      border-color: var(--border-strong);
       box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
     }
 
     /* ----- FORM ELEMENTS ----- */
     label {
       display: block;
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.7px;
       color: var(--text-dim);
-      margin-bottom: 7px;
+      margin-bottom: 8px;
     }
 
     input, select {
       width: 100%;
-      padding: 12px 14px;
-      background: #ffffff;
-      border: 1px solid var(--border);
+      padding: 13px 15px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--text);
       font-size: 14px;
-      font-weight: 400;
+      font-weight: 500;
       outline: none;
       transition: var(--transition);
       font-family: inherit;
     }
 
     input::placeholder {
-      color: #b5a99c;
+      color: #b8ab9c;
+      font-weight: 400;
     }
 
     input:hover, select:hover {
-      border-color: #cfc3b5;
+      border-color: var(--border-strong);
+      background: #ffffff;
     }
 
     input:focus, select:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px var(--accent-glow);
+      transform: translateY(-1px);
     }
 
     input[type="number"] {
@@ -167,112 +222,145 @@
 
     select {
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a7f74' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a7d6f' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 14px center;
+      background-position: right 15px center;
       background-size: 15px;
-      padding-right: 42px;
+      padding-right: 44px;
       cursor: pointer;
     }
 
     select option {
       background: #ffffff;
       color: var(--text);
+      padding: 8px;
     }
 
     /* ----- ENTRY ROW GRID ----- */
     .row-input {
       display: grid;
       grid-template-columns: 1fr 1.3fr auto;
-      gap: 10px;
+      gap: 11px;
       align-items: end;
       margin-bottom: 14px;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      background: rgba(250, 246, 241, 0.5);
+      border: 1px solid transparent;
       transition: var(--transition);
+      animation: fadeIn 0.35s ease both;
+    }
+
+    .row-input:hover {
+      background: rgba(250, 246, 241, 0.85);
+      border-color: var(--border);
     }
 
     .row-input:last-child {
       margin-bottom: 0;
     }
 
+    /* ----- REMOVE BUTTON ----- */
     .remove {
-      background: #fdf2f0;
+      background: var(--red-bg);
       color: var(--red-soft);
-      border: 1px solid #f0d9d4;
-      padding: 12px 16px;
+      border: 1.5px solid rgba(201, 107, 92, 0.22);
+      padding: 13px 16px;
       border-radius: var(--radius-sm);
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 13px;
+      font-family: inherit;
       transition: var(--transition);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 4px;
+      white-space: nowrap;
     }
 
     .remove:hover {
-      background: #fae6e2;
-      border-color: #e6b8ae;
+      background: #fce4de;
+      border-color: rgba(201, 107, 92, 0.5);
       color: #b05a4a;
-      transform: scale(1.02);
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px -4px rgba(201, 107, 92, 0.3);
     }
 
     .remove:active {
-      transform: scale(0.97);
+      transform: scale(0.96);
     }
 
     /* ----- BUTTONS ----- */
     button {
       border: none;
       border-radius: var(--radius-sm);
-      padding: 12px 18px;
+      padding: 13px 20px;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 14px;
       font-family: inherit;
       transition: var(--transition);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 7px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    button:hover::after {
+      transform: translateX(100%);
     }
 
     .add {
-      background: linear-gradient(135deg, #d9a86c, #c98a4b);
+      background: linear-gradient(135deg, #d9a86c 0%, #c98a4b 50%, #b87a3e 100%);
       color: #ffffff;
       width: 100%;
-      box-shadow: 0 6px 18px -6px rgba(201, 138, 75, 0.35);
-      border: 1px solid #d9a86c;
-      margin-top: 6px;
-      letter-spacing: 0.3px;
+      box-shadow: 0 6px 20px -6px rgba(201, 138, 75, 0.45);
+      border: 1px solid rgba(217, 168, 108, 0.6);
+      margin-top: 8px;
+      letter-spacing: 0.4px;
+      text-shadow: 0 1px 2px rgba(150, 100, 50, 0.2);
     }
 
     .add:hover {
-      background: linear-gradient(135deg, #e0b47c, #d1995e);
-      transform: translateY(-1px);
-      box-shadow: 0 10px 24px -6px rgba(201, 138, 75, 0.45);
+      background: linear-gradient(135deg, #e0b47c 0%, #d1995e 50%, #c2844a 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -8px rgba(201, 138, 75, 0.55);
     }
 
     .add:active {
-      transform: translateY(0);
+      transform: translateY(0) scale(0.99);
     }
 
     .reset {
-      background: #f5f1eb;
+      background: rgba(255, 255, 255, 0.7);
       color: var(--text-soft);
       width: 100%;
-      border: 1px solid var(--border);
-      font-weight: 500;
+      border: 1.5px solid var(--border);
+      font-weight: 600;
       letter-spacing: 0.3px;
-      transition: var(--transition);
-      padding: 14px;
+      padding: 15px;
+      backdrop-filter: blur(8px);
     }
 
     .reset:hover {
-      background: #ece6de;
-      border-color: #cfc3b5;
+      background: #ffffff;
+      border-color: var(--border-strong);
       color: var(--text);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -8px rgba(90, 70, 50, 0.2);
     }
 
     .reset:active {
@@ -284,72 +372,94 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-top: 6px;
+      margin-top: 8px;
     }
 
     .result {
-      background: var(--card-soft);
-      padding: 16px 18px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
+      background: var(--card-solid);
+      padding: 18px 20px;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
       transition: var(--transition);
-      animation: fadeIn 0.35s ease both;
+      animation: fadeIn 0.4s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent), transparent);
+      opacity: 0;
+      transition: var(--transition);
     }
 
     .result:hover {
-      border-color: #cfc3b5;
-      background: #f6f2ec;
+      border-color: var(--border-strong);
+      background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .result:hover::before {
+      opacity: 1;
     }
 
     .result small {
       display: block;
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 10.5px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.7px;
       color: var(--text-dim);
-      margin-bottom: 6px;
+      margin-bottom: 7px;
     }
 
     .result strong {
       display: block;
-      font-size: 21px;
-      font-weight: 700;
-      letter-spacing: -0.2px;
-      line-height: 1.3;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
       transition: var(--transition);
     }
 
-    .total { color: #b67d3e; }          /* warm caramel */
-    .worker { color: var(--green); }    /* soft sage green */
-    .admin { color: var(--amber); }     /* warm amber */
+    .total { color: #b67d3e; }
+    .worker { color: var(--green); }
+    .admin { color: var(--amber); }
 
     /* ----- SUMMARY ----- */
     .summary {
       font-size: 13px;
       color: var(--text-soft);
       line-height: 1.9;
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px dashed var(--border);
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1.5px dashed var(--border);
       transition: var(--transition);
     }
 
     .summary b {
       color: var(--text);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .summary .detail-item {
       display: flex;
       justify-content: space-between;
-      padding: 2px 0;
+      padding: 3px 0;
       color: var(--text-soft);
+      font-weight: 500;
     }
 
     .summary .detail-item span:last-child {
       color: var(--text);
-      font-weight: 500;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
     }
 
     /* ----- UTILITY ----- */
@@ -361,51 +471,80 @@
     @keyframes fadeSlide {
       0% {
         opacity: 0;
-        transform: translateY(12px);
+        transform: translateY(18px) scale(0.98);
       }
       100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
     @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes pop {
-      0% { transform: scale(0.96); opacity: 0.7; }
+      0% { transform: scale(0.94); opacity: 0.6; }
+      60% { transform: scale(1.02); }
       100% { transform: scale(1); opacity: 1; }
     }
 
     .result strong {
-      animation: pop 0.25s ease;
+      animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Floating subtle animation for brand icon */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+
+    .brand-icon {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* ----- SCROLLBAR ----- */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d9cfc2;
+      border-radius: 10px;
+      border: 2px solid var(--bg);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #c4b6a5;
     }
 
     /* ----- RESPONSIVE ----- */
-    @media (max-width: 520px) {
+    @media (max-width: 560px) {
       body {
         padding: 16px 12px;
       }
       .brand h1 {
-        font-size: 20px;
+        font-size: 21px;
       }
       .brand-icon {
-        width: 42px;
-        height: 42px;
-        font-size: 22px;
-        border-radius: 12px;
+        width: 46px;
+        height: 46px;
+        font-size: 23px;
+        border-radius: 15px;
       }
       .card {
-        padding: 18px 15px;
+        padding: 20px 16px;
+        border-radius: 20px;
       }
       .row-input {
         grid-template-columns: 1fr 1fr;
+        padding: 12px;
       }
       .row-input .remove {
         grid-column: span 2;
-        padding: 10px;
+        padding: 11px;
         font-size: 12px;
       }
       .results {
@@ -413,7 +552,31 @@
         gap: 10px;
       }
       .result strong {
-        font-size: 19px;
+        font-size: 20px;
+      }
+      .result {
+        padding: 16px 18px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .brand-text h1 {
+        font-size: 18px;
+      }
+      .brand-text .sub {
+        font-size: 10px;
+        letter-spacing: 1px;
+      }
+      .result strong {
+        font-size: 18px;
+      }
+    }
+
+    /* Reduce motion for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
       }
     }
   </style>
@@ -434,23 +597,23 @@
     <div class="card">
       <label>SISTEM PEMBAGIAN</label>
       <select id="mode" onchange="render()">
-        <option value="one">1 Worker (70% Worker / 30% Admin)</option>
-        <option value="two">2 Worker 1 Order (42.5% / 42.5% / 15%)</option>
-        <option value="separate">2 Order Terpisah (70% / 30% masing-masing)</option>
+        <option value="one">1 Worker — 70% Worker / 30% Admin</option>
+        <option value="two">2 Worker 1 Order — 42.5% / 42.5% / 15%</option>
+        <option value="separate">2 Order Terpisah — 70% / 30% masing-masing</option>
       </select>
     </div>
 
     <!-- NAMES & ENTRIES CARD -->
     <div class="card">
       <div id="names"></div>
-      <h3 style="font-size:14px; font-weight:600; color:var(--text-soft); margin:12px 0 12px; letter-spacing:0.3px;">Daftar Bintang</h3>
+      <h3 style="font-size:13px; font-weight:700; color:var(--text-soft); margin:16px 0 12px; letter-spacing:0.5px; text-transform:uppercase;">Daftar Bintang</h3>
       <div id="entries"></div>
       <button class="add" onclick="addEntry()">+ Tambah Bintang</button>
     </div>
 
     <!-- RESULTS CARD -->
     <div class="card">
-      <h3 style="font-size:14px; font-weight:600; color:var(--text-soft); margin-bottom:14px; letter-spacing:0.3px;">Hasil Pembagian</h3>
+      <h3 style="font-size:13px; font-weight:700; color:var(--text-soft); margin-bottom:16px; letter-spacing:0.5px; text-transform:uppercase;">Hasil Pembagian</h3>
       <div class="results">
         <div class="result">
           <small>Total Pendapatan</small>
@@ -570,7 +733,7 @@
               <label>Rank</label>
               <select onchange="updateEntry(${i},'rank',this.value)">
                 ${Object.keys(prices).map(r =>
-                  `<option value="${r}" ${e.rank === r ? 'selected' : ''}>${r} - ${money(prices[r])}</option>`
+                  `<option value="${r}" ${e.rank === r ? 'selected' : ''}>${r} — ${money(prices[r])}</option>`
                 ).join("")}
               </select>
             </div>
@@ -635,14 +798,14 @@
         ? detailLines.map(d =>
             `<div class="detail-item"><span>${d.s} bintang ${d.rank}</span><span>${money(d.amount)}</span></div>`
           ).join("")
-        : `<div style="color:#b5a99c; font-style:italic;">Belum ada bintang</div>`;
+        : `<div style="color:#b8ab9c; font-style:italic;">Belum ada bintang</div>`;
 
       document.getElementById("summary").innerHTML = `
-        <b style="font-size:12px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-dim);">Rincian</b>
-        <div style="margin:6px 0 10px;">${detailHtml}</div>
-        <div style="display:flex; justify-content:space-between; border-top:1px solid var(--border); padding-top:10px; margin-top:4px;">
-          <span style="color:var(--text-dim);">Total pembagian</span>
-          <span style="color:var(--text); font-weight:600;">${money(w1 + w2 + admin)}</span>
+        <b style="font-size:11px; text-transform:uppercase; letter-spacing:0.7px; color:var(--text-dim);">Rincian</b>
+        <div style="margin:8px 0 12px;">${detailHtml}</div>
+        <div style="display:flex; justify-content:space-between; border-top:1.5px solid var(--border); padding-top:12px; margin-top:4px;">
+          <span style="color:var(--text-dim); font-weight:600;">Total pembagian</span>
+          <span style="color:var(--text); font-weight:800;">${money(w1 + w2 + admin)}</span>
         </div>
       `;
     }
