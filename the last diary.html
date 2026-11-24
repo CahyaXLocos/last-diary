@@ -13,25 +13,29 @@
     }
 
     :root {
-      --bg: #0f1422;
-      --card: #1a2335;
-      --card-soft: #1e2a3e;
-      --border: #2c3a52;
-      --text: #edf2f9;
-      --text-dim: #9fb0cc;
-      --accent: #6d8eff;
-      --accent-glow: rgba(109, 142, 255, 0.25);
-      --green: #6ee7b7;
-      --amber: #fcd34d;
-      --red-soft: #f87171;
+      --bg: #f8f6f3;
+      --card: #ffffff;
+      --card-soft: #faf8f5;
+      --border: #e6e0d8;
+      --border-light: #d9d1c6;
+      --text: #2b2622;
+      --text-dim: #8a7f74;
+      --text-soft: #6b6158;
+      --accent: #c98a4b;          /* warm caramel */
+      --accent-glow: rgba(201, 138, 75, 0.18);
+      --green: #6b9e6b;           /* soft sage green */
+      --amber: #d49a3a;           /* warm amber */
+      --red-soft: #d17a6b;        /* muted coral */
       --radius: 18px;
       --radius-sm: 12px;
-      --shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.6);
+      --shadow: 0 8px 26px -10px rgba(0, 0, 0, 0.10);
+      --shadow-hover: 0 12px 32px -10px rgba(0, 0, 0, 0.15);
       --transition: all 0.25s ease;
     }
 
     body {
-      background: radial-gradient(circle at 20% 10%, #18233b, #0b0f1c 90%);
+      background: var(--bg);
+      background-image: radial-gradient(circle at 20% 0%, #fffbf5, #f3efe9 80%);
       color: var(--text);
       font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       padding: 24px 18px;
@@ -49,7 +53,7 @@
       margin: 0 auto;
     }
 
-    /* ----- HEADER ----- */
+    /* ----- HEADER / BRAND ----- */
     .brand {
       display: flex;
       align-items: center;
@@ -60,23 +64,24 @@
     }
 
     .brand-icon {
-      width: 46px;
-      height: 46px;
-      background: linear-gradient(145deg, #415b9c, #2c3d6b);
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(145deg, #f0e4d4, #e2cfb8);
       border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 26px;
-      box-shadow: 0 8px 14px -6px rgba(0, 0, 0, 0.5);
-      border: 1px solid #5c7acf;
+      box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.12);
+      border: 1px solid #d9c3a8;
+      color: #8a6a44;
     }
 
     .brand-text h1 {
       font-size: 24px;
       font-weight: 700;
       letter-spacing: -0.3px;
-      background: linear-gradient(to right, #ffffff, #b8c9ff);
+      background: linear-gradient(to right, #3d342c, #6b5a4a);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -84,10 +89,10 @@
     }
 
     .brand-text .sub {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 400;
       color: var(--text-dim);
-      letter-spacing: 0.6px;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
       margin-top: 2px;
     }
@@ -107,8 +112,10 @@
     .card:nth-child(2) { animation-delay: 0.05s; }
     .card:nth-child(3) { animation-delay: 0.1s; }
     .card:nth-child(4) { animation-delay: 0.15s; }
+
     .card:hover {
-      border-color: #3a4d6d;
+      border-color: var(--border-light);
+      box-shadow: var(--shadow-hover);
     }
 
     /* ----- FORM ELEMENTS ----- */
@@ -117,15 +124,15 @@
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
       color: var(--text-dim);
-      margin-bottom: 6px;
+      margin-bottom: 7px;
     }
 
     input, select {
       width: 100%;
       padding: 12px 14px;
-      background: #0f172b;
+      background: #ffffff;
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--text);
@@ -136,8 +143,12 @@
       font-family: inherit;
     }
 
+    input::placeholder {
+      color: #b5a99c;
+    }
+
     input:hover, select:hover {
-      border-color: #3f5275;
+      border-color: #cfc3b5;
     }
 
     input:focus, select:focus {
@@ -156,7 +167,7 @@
 
     select {
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239fb0cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a7f74' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 14px center;
       background-size: 15px;
@@ -165,11 +176,11 @@
     }
 
     select option {
-      background: #0f172b;
+      background: #ffffff;
       color: var(--text);
     }
 
-    /* ----- GRID FOR ENTRY ROWS ----- */
+    /* ----- ENTRY ROW GRID ----- */
     .row-input {
       display: grid;
       grid-template-columns: 1fr 1.3fr auto;
@@ -184,9 +195,9 @@
     }
 
     .remove {
-      background: rgba(248, 113, 113, 0.12);
-      color: #fca5a5;
-      border: 1px solid rgba(248, 113, 113, 0.25);
+      background: #fdf2f0;
+      color: var(--red-soft);
+      border: 1px solid #f0d9d4;
       padding: 12px 16px;
       border-radius: var(--radius-sm);
       cursor: pointer;
@@ -200,9 +211,9 @@
     }
 
     .remove:hover {
-      background: rgba(248, 113, 113, 0.22);
-      border-color: #f87171;
-      color: #ffffff;
+      background: #fae6e2;
+      border-color: #e6b8ae;
+      color: #b05a4a;
       transform: scale(1.02);
     }
 
@@ -227,18 +238,19 @@
     }
 
     .add {
-      background: linear-gradient(135deg, #3b6aff, #2d4fc7);
+      background: linear-gradient(135deg, #d9a86c, #c98a4b);
       color: #ffffff;
       width: 100%;
-      box-shadow: 0 8px 18px -8px rgba(59, 106, 255, 0.5);
-      border: 1px solid #5b81ff;
+      box-shadow: 0 6px 18px -6px rgba(201, 138, 75, 0.35);
+      border: 1px solid #d9a86c;
       margin-top: 6px;
+      letter-spacing: 0.3px;
     }
 
     .add:hover {
-      background: linear-gradient(135deg, #5180ff, #3e63db);
+      background: linear-gradient(135deg, #e0b47c, #d1995e);
       transform: translateY(-1px);
-      box-shadow: 0 12px 22px -8px rgba(59, 106, 255, 0.65);
+      box-shadow: 0 10px 24px -6px rgba(201, 138, 75, 0.45);
     }
 
     .add:active {
@@ -246,19 +258,20 @@
     }
 
     .reset {
-      background: #26344d;
-      color: #d6e2ff;
+      background: #f5f1eb;
+      color: var(--text-soft);
       width: 100%;
-      border: 1px solid #35476a;
+      border: 1px solid var(--border);
       font-weight: 500;
       letter-spacing: 0.3px;
       transition: var(--transition);
+      padding: 14px;
     }
 
     .reset:hover {
-      background: #2f3f5c;
-      border-color: #4c6290;
-      color: #ffffff;
+      background: #ece6de;
+      border-color: #cfc3b5;
+      color: var(--text);
       transform: translateY(-1px);
     }
 
@@ -266,7 +279,7 @@
       transform: translateY(0);
     }
 
-    /* ----- RESULT GRID ----- */
+    /* ----- RESULTS GRID ----- */
     .results {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -284,8 +297,8 @@
     }
 
     .result:hover {
-      border-color: #3f547a;
-      background: #1d2b42;
+      border-color: #cfc3b5;
+      background: #f6f2ec;
     }
 
     .result small {
@@ -293,7 +306,7 @@
       font-size: 11px;
       font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
       color: var(--text-dim);
       margin-bottom: 6px;
     }
@@ -307,23 +320,23 @@
       transition: var(--transition);
     }
 
-    .total { color: #7fa0ff; }
-    .worker { color: var(--green); }
-    .admin { color: var(--amber); }
+    .total { color: #b67d3e; }          /* warm caramel */
+    .worker { color: var(--green); }    /* soft sage green */
+    .admin { color: var(--amber); }     /* warm amber */
 
     /* ----- SUMMARY ----- */
     .summary {
       font-size: 13px;
-      color: #cbd5e1;
+      color: var(--text-soft);
       line-height: 1.9;
       margin-top: 16px;
       padding-top: 16px;
-      border-top: 1px dashed #31415e;
+      border-top: 1px dashed var(--border);
       transition: var(--transition);
     }
 
     .summary b {
-      color: #e0e8ff;
+      color: var(--text);
       font-weight: 600;
     }
 
@@ -331,11 +344,11 @@
       display: flex;
       justify-content: space-between;
       padding: 2px 0;
-      color: #b7c6e0;
+      color: var(--text-soft);
     }
 
     .summary .detail-item span:last-child {
-      color: #d6e2ff;
+      color: var(--text);
       font-weight: 500;
     }
 
@@ -379,8 +392,8 @@
         font-size: 20px;
       }
       .brand-icon {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
         font-size: 22px;
         border-radius: 12px;
       }
@@ -430,14 +443,14 @@
     <!-- NAMES & ENTRIES CARD -->
     <div class="card">
       <div id="names"></div>
-      <h3 style="font-size:14px; font-weight:600; color:#b9c9e5; margin:12px 0 12px; letter-spacing:0.3px;">Daftar Bintang</h3>
+      <h3 style="font-size:14px; font-weight:600; color:var(--text-soft); margin:12px 0 12px; letter-spacing:0.3px;">Daftar Bintang</h3>
       <div id="entries"></div>
       <button class="add" onclick="addEntry()">+ Tambah Bintang</button>
     </div>
 
     <!-- RESULTS CARD -->
     <div class="card">
-      <h3 style="font-size:14px; font-weight:600; color:#b9c9e5; margin-bottom:14px; letter-spacing:0.3px;">Hasil Pembagian</h3>
+      <h3 style="font-size:14px; font-weight:600; color:var(--text-soft); margin-bottom:14px; letter-spacing:0.3px;">Hasil Pembagian</h3>
       <div class="results">
         <div class="result">
           <small>Total Pendapatan</small>
@@ -622,14 +635,14 @@
         ? detailLines.map(d =>
             `<div class="detail-item"><span>${d.s} bintang ${d.rank}</span><span>${money(d.amount)}</span></div>`
           ).join("")
-        : `<div style="color:#7a8aa8; font-style:italic;">Belum ada bintang</div>`;
+        : `<div style="color:#b5a99c; font-style:italic;">Belum ada bintang</div>`;
 
       document.getElementById("summary").innerHTML = `
-        <b style="font-size:12px; text-transform:uppercase; letter-spacing:0.4px; color:#9fb0cc;">Rincian</b>
+        <b style="font-size:12px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-dim);">Rincian</b>
         <div style="margin:6px 0 10px;">${detailHtml}</div>
-        <div style="display:flex; justify-content:space-between; border-top:1px solid #31415e; padding-top:10px; margin-top:4px;">
-          <span style="color:#9fb0cc;">Total pembagian</span>
-          <span style="color:#e0e8ff; font-weight:600;">${money(w1 + w2 + admin)}</span>
+        <div style="display:flex; justify-content:space-between; border-top:1px solid var(--border); padding-top:10px; margin-top:4px;">
+          <span style="color:var(--text-dim);">Total pembagian</span>
+          <span style="color:var(--text); font-weight:600;">${money(w1 + w2 + admin)}</span>
         </div>
       `;
     }
