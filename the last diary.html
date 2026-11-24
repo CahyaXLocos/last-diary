@@ -2,1082 +2,647 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Daily List • 1% Lebih Baik</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cahya Mirip Nnael · Worker Calculator</title>
   <style>
+    /* ----- RESET & GLOBAL ----- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    body {
-      background: #080b12;
-      background-image: 
-        radial-gradient(ellipse at 20% 50%, #1a2a3f 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, #0f1a2a 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 80%, #121d30 0%, transparent 40%),
-        linear-gradient(180deg, #080b12 0%, #0c111c 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      font-family: 'Inter', -apple-system, sans-serif;
-      padding: 20px 12px 40px;
-      color: #eef2f6;
+    :root {
+      --bg: #0f1422;
+      --card: #1a2335;
+      --card-soft: #1e2a3e;
+      --border: #2c3a52;
+      --text: #edf2f9;
+      --text-dim: #9fb0cc;
+      --accent: #6d8eff;
+      --accent-glow: rgba(109, 142, 255, 0.25);
+      --green: #6ee7b7;
+      --amber: #fcd34d;
+      --red-soft: #f87171;
+      --radius: 18px;
+      --radius-sm: 12px;
+      --shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.6);
+      --transition: all 0.25s ease;
     }
 
-    /* Floating particles */
-    .bg-particles {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-    .bg-particles span {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: rgba(251, 191, 36, 0.15);
-      border-radius: 50%;
-      animation: floatParticle 20s infinite linear;
-    }
-    @keyframes floatParticle {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+    body {
+      background: radial-gradient(circle at 20% 10%, #18233b, #0b0f1c 90%);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 24px 18px;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
     .container {
-      max-width: 460px;
+      max-width: 720px;
       width: 100%;
-      background: rgba(12, 18, 30, 0.75);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 40px;
-      padding: 28px 22px 30px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: 
-        0 30px 80px -20px rgba(0, 0, 0, 0.9),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      position: relative;
-      z-index: 1;
+      margin: 0 auto;
     }
 
-    /* HEADER */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .day-section {
+    /* ----- HEADER ----- */
+    .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding-left: 4px;
+      animation: fadeSlide 0.45s ease both;
     }
 
-    .day-badge {
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      color: #0a0d12;
-      font-weight: 900;
-      font-size: 15px;
-      padding: 8px 20px;
-      border-radius: 40px;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-    .day-badge::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-      animation: shimmer 3s infinite;
-    }
-    @keyframes shimmer {
-      0% { transform: translateX(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) rotate(45deg); }
-    }
-
-    .day-total {
-      font-size: 13px;
-      color: #6a7f9e;
-      font-weight: 500;
-    }
-
-    .nav-group {
-      display: flex;
-      gap: 6px;
-    }
-
-    .nav-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      color: #8aa0c0;
-      width: 40px;
-      height: 40px;
+    .brand-icon {
+      width: 46px;
+      height: 46px;
+      background: linear-gradient(145deg, #415b9c, #2c3d6b);
       border-radius: 14px;
-      cursor: pointer;
-      font-size: 15px;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(4px);
+      font-size: 26px;
+      box-shadow: 0 8px 14px -6px rgba(0, 0, 0, 0.5);
+      border: 1px solid #5c7acf;
     }
 
-    .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+    .brand-text h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      background: linear-gradient(to right, #ffffff, #b8c9ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    .brand-text .sub {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-dim);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ----- CARD ----- */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      animation: fadeSlide 0.45s ease both;
+    }
+
+    .card:nth-child(2) { animation-delay: 0.05s; }
+    .card:nth-child(3) { animation-delay: 0.1s; }
+    .card:nth-child(4) { animation-delay: 0.15s; }
+    .card:hover {
+      border-color: #3a4d6d;
+    }
+
+    /* ----- FORM ELEMENTS ----- */
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      background: #0f172b;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 400;
+      outline: none;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    input:hover, select:hover {
+      border-color: #3f5275;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239fb0cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 15px;
+      padding-right: 42px;
+      cursor: pointer;
+    }
+
+    select option {
+      background: #0f172b;
+      color: var(--text);
+    }
+
+    /* ----- GRID FOR ENTRY ROWS ----- */
+    .row-input {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr auto;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 14px;
+      transition: var(--transition);
+    }
+
+    .row-input:last-child {
+      margin-bottom: 0;
+    }
+
+    .remove {
+      background: rgba(248, 113, 113, 0.12);
+      color: #fca5a5;
+      border: 1px solid rgba(248, 113, 113, 0.25);
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .remove:hover {
+      background: rgba(248, 113, 113, 0.22);
+      border-color: #f87171;
+      color: #ffffff;
+      transform: scale(1.02);
+    }
+
+    .remove:active {
+      transform: scale(0.97);
+    }
+
+    /* ----- BUTTONS ----- */
+    button {
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px 18px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      font-family: inherit;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .add {
+      background: linear-gradient(135deg, #3b6aff, #2d4fc7);
+      color: #ffffff;
+      width: 100%;
+      box-shadow: 0 8px 18px -8px rgba(59, 106, 255, 0.5);
+      border: 1px solid #5b81ff;
+      margin-top: 6px;
+    }
+
+    .add:hover {
+      background: linear-gradient(135deg, #5180ff, #3e63db);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px -8px rgba(59, 106, 255, 0.65);
+    }
+
+    .add:active {
+      transform: translateY(0);
+    }
+
+    .reset {
+      background: #26344d;
+      color: #d6e2ff;
+      width: 100%;
+      border: 1px solid #35476a;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      transition: var(--transition);
+    }
+
+    .reset:hover {
+      background: #2f3f5c;
+      border-color: #4c6290;
+      color: #ffffff;
       transform: translateY(-1px);
     }
 
-    .nav-btn:active {
-      transform: scale(0.92);
+    .reset:active {
+      transform: translateY(0);
     }
 
-    .nav-btn.danger {
-      background: rgba(239, 68, 68, 0.1);
-      border-color: rgba(239, 68, 68, 0.15);
-      color: #f87171;
-    }
-    .nav-btn.danger:hover {
-      background: rgba(239, 68, 68, 0.2);
-    }
-
-    /* TIMELINE MINI */
-    .timeline-mini {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 18px;
-      padding: 6px 4px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      flex-wrap: nowrap;
-    }
-    .timeline-mini::-webkit-scrollbar {
-      display: none;
-    }
-
-    .day-dot {
-      width: 22px;
-      height: 22px;
-      min-width: 22px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 7px;
-      font-weight: 700;
-      color: #4a5a72;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-      position: relative;
-    }
-    .day-dot.active {
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      border-color: #fbbf24;
-      color: #0a0d12;
-      transform: scale(1.15);
-      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-    }
-    .day-dot.completed {
-      background: rgba(251, 191, 36, 0.15);
-      border-color: rgba(251, 191, 36, 0.2);
-      color: #fbbf24;
-    }
-    .day-dot.partial {
-      background: rgba(251, 191, 36, 0.06);
-      border-color: rgba(251, 191, 36, 0.08);
-      color: #6a7f9e;
-    }
-    .day-dot:hover {
-      transform: scale(1.08);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    /* QUOTE */
-    .quote-box {
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.06), rgba(251, 191, 36, 0.01));
-      border-left: 3px solid #fbbf24;
-      padding: 14px 18px;
-      border-radius: 16px;
-      margin-bottom: 20px;
-      font-size: 13px;
-      line-height: 1.6;
-      color: #b8c8e0;
-      font-weight: 400;
-      letter-spacing: 0.2px;
-      position: relative;
-    }
-    .quote-box strong {
-      color: #fbbf24;
-      font-weight: 700;
-    }
-    .quote-box .quote-icon {
-      position: absolute;
-      right: 14px;
-      top: 10px;
-      font-size: 20px;
-      opacity: 0.1;
-      color: #fbbf24;
-    }
-
-    /* SECTION TITLE */
-    .section-title {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: #5a7a9a;
-      margin: 16px 0 10px 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0 4px;
-    }
-    .section-title i {
-      font-size: 13px;
-      color: #fbbf24;
-      opacity: 0.6;
-    }
-    .section-title .line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(251, 191, 36, 0.1), transparent);
-    }
-
-    /* CHECKLIST */
-    .task-list {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-bottom: 4px;
-    }
-
-    .task-item {
-      display: flex;
-      align-items: center;
+    /* ----- RESULT GRID ----- */
+    .results {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
-      padding: 9px 12px 9px 10px;
-      border-radius: 14px;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid transparent;
-      cursor: pointer;
-      position: relative;
+      margin-top: 6px;
     }
 
-    .task-item:hover {
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .task-item.checked {
-      background: rgba(251, 191, 36, 0.06);
-      border-color: rgba(251, 191, 36, 0.08);
-    }
-
-    .task-item.checked .task-label {
-      text-decoration: line-through;
-      color: #6a7f9e;
-    }
-
-    .task-item .task-check {
-      width: 24px;
-      height: 24px;
-      min-width: 24px;
-      border-radius: 10px;
-      border: 2px solid #3a4a62;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      color: #0a0d12;
-      font-size: 11px;
-      background: transparent;
-    }
-
-    .task-item.checked .task-check {
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      border-color: #fbbf24;
-      color: #0a0d12;
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
-    }
-
-    .task-item .task-check i {
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .task-item.checked .task-check i {
-      transform: scale(1);
-    }
-    .task-item:not(.checked) .task-check i {
-      transform: scale(0.7);
-      opacity: 0.3;
-    }
-
-    .task-label {
-      font-size: 13.5px;
-      font-weight: 500;
-      color: #dce4f0;
-      flex: 1;
-      line-height: 1.4;
-      letter-spacing: 0.2px;
-    }
-
-    .task-emoji {
-      font-size: 16px;
-      margin-right: 4px;
-    }
-
-    .task-number {
-      font-size: 10px;
-      color: #4a5a72;
-      font-weight: 600;
-      opacity: 0.5;
-      min-width: 18px;
-      text-align: right;
-    }
-
-    /* RULES */
-    .rules-box {
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.04), rgba(251, 191, 36, 0.01));
-      border: 1px solid rgba(251, 191, 36, 0.06);
-      border-radius: 18px;
+    .result {
+      background: var(--card-soft);
       padding: 16px 18px;
-      margin: 16px 0 14px 0;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      animation: fadeIn 0.35s ease both;
     }
 
-    .rules-box .rule {
-      font-size: 12.5px;
-      color: #b0c4de;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      padding: 3px 0;
-      font-weight: 400;
-      letter-spacing: 0.2px;
+    .result:hover {
+      border-color: #3f547a;
+      background: #1d2b42;
     }
 
-    .rules-box .rule i {
-      color: #fbbf24;
-      margin-top: 1px;
+    .result small {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .result strong {
+      display: block;
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      line-height: 1.3;
+      transition: var(--transition);
+    }
+
+    .total { color: #7fa0ff; }
+    .worker { color: var(--green); }
+    .admin { color: var(--amber); }
+
+    /* ----- SUMMARY ----- */
+    .summary {
       font-size: 13px;
-      width: 18px;
-      text-align: center;
+      color: #cbd5e1;
+      line-height: 1.9;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed #31415e;
+      transition: var(--transition);
     }
 
-    .rules-box .rule strong {
-      color: #fbbf24;
+    .summary b {
+      color: #e0e8ff;
       font-weight: 600;
     }
 
-    /* PROGRESS */
-    .progress-wrap {
-      margin: 14px 0 14px 0;
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.03);
-    }
-
-    .progress-stats {
+    .summary .detail-item {
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
-      color: #6a7f9e;
-      margin-bottom: 8px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-    }
-    .progress-stats .done-text {
-      color: #fbbf24;
+      padding: 2px 0;
+      color: #b7c6e0;
     }
 
-    .progress-bar {
-      width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 10px;
-      overflow: hidden;
-      position: relative;
+    .summary .detail-item span:last-child {
+      color: #d6e2ff;
+      font-weight: 500;
     }
 
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #fbbf24, #f59e0b);
-      border-radius: 10px;
-      width: 0%;
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-    }
-    .progress-fill::after {
-      content: '';
-      position: absolute;
-      top: 0; right: 0; bottom: 0;
-      width: 20px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2));
-      border-radius: 10px;
+    /* ----- UTILITY ----- */
+    .hidden {
+      display: none !important;
     }
 
-    /* BOTTOM */
-    .bottom-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .btn-primary {
-      flex: 1;
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      border: none;
-      color: #0a0d12;
-      font-weight: 700;
-      font-size: 14px;
-      padding: 14px 0;
-      border-radius: 40px;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 4px 24px rgba(245, 158, 11, 0.2);
-      letter-spacing: 0.3px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-primary::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-      animation: shimmer 3s infinite;
-    }
-
-    .btn-primary:active {
-      transform: scale(0.96);
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-    .btn-primary:disabled::after {
-      display: none;
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      color: #6a7f9e;
-      padding: 14px 20px;
-      border-radius: 40px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: #b0c4de;
-    }
-
-    .btn-secondary.danger:hover {
-      background: rgba(239, 68, 68, 0.15);
-      color: #f87171;
-      border-color: rgba(239, 68, 68, 0.2);
-    }
-
-    /* MODAL */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      padding: 24px;
-      animation: fadeIn 0.4s ease;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal {
-      background: linear-gradient(145deg, #1a2538, #121d30);
-      border-radius: 40px;
-      padding: 36px 30px 30px;
-      max-width: 380px;
-      width: 100%;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.9);
-      animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-    .modal::before {
-      content: '';
-      position: absolute;
-      top: -60%;
-      left: -60%;
-      width: 220%;
-      height: 220%;
-      background: radial-gradient(circle at 30% 20%, rgba(251, 191, 36, 0.05), transparent 60%);
-      pointer-events: none;
-    }
-
-    .modal .icon-big {
-      font-size: 64px;
-      margin-bottom: 8px;
-      display: block;
-      animation: bounceIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @keyframes bounceIn {
-      0% { transform: scale(0) rotate(-10deg); opacity: 0; }
-      60% { transform: scale(1.1) rotate(2deg); }
-      100% { transform: scale(1) rotate(0); opacity: 1; }
-    }
-
-    .modal h2 {
-      font-size: 24px;
-      font-weight: 800;
-      color: #fbbf24;
-      margin-bottom: 8px;
-      letter-spacing: -0.5px;
-    }
-
-    .modal p {
-      color: #b0c4de;
-      font-size: 15px;
-      line-height: 1.7;
-      margin-bottom: 24px;
-      font-weight: 400;
-    }
-
-    .modal .btn-primary {
-      width: 100%;
-      padding: 16px 0;
-      font-size: 15px;
-      box-shadow: 0 4px 30px rgba(245, 158, 11, 0.25);
-    }
-
-    .modal .streak-count {
-      display: inline-block;
-      background: rgba(251, 191, 36, 0.1);
-      padding: 4px 16px;
-      border-radius: 40px;
-      font-size: 12px;
-      color: #fbbf24;
-      font-weight: 600;
-      margin-bottom: 12px;
+    /* ----- ANIMATIONS ----- */
+    @keyframes fadeSlide {
+      0% {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      0% { opacity: 0; }
+      100% { opacity: 1; }
     }
 
-    @keyframes slideUp {
-      from { transform: translateY(40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    @keyframes pop {
+      0% { transform: scale(0.96); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
-    /* SCROLLBAR */
-    ::-webkit-scrollbar {
-      width: 3px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #3a4a62;
-      border-radius: 10px;
+    .result strong {
+      animation: pop 0.25s ease;
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 480px) {
-      .container { padding: 20px 14px 22px; border-radius: 28px; }
-      .task-item { padding: 7px 10px; }
-      .task-label { font-size: 12.5px; }
-      .day-badge { font-size: 13px; padding: 6px 16px; }
-      .nav-btn { width: 36px; height: 36px; font-size: 13px; }
-      .modal { padding: 28px 20px 24px; }
-    }
-
-    /* CELEBRATION CONFETTI */
-    .confetti-container {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 1000;
-      overflow: hidden;
-    }
-    .confetti {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      top: -10px;
-      animation: confettiFall linear forwards;
-    }
-    @keyframes confettiFall {
-      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
-      100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 520px) {
+      body {
+        padding: 16px 12px;
+      }
+      .brand h1 {
+        font-size: 20px;
+      }
+      .brand-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+        border-radius: 12px;
+      }
+      .card {
+        padding: 18px 15px;
+      }
+      .row-input {
+        grid-template-columns: 1fr 1fr;
+      }
+      .row-input .remove {
+        grid-column: span 2;
+        padding: 10px;
+        font-size: 12px;
+      }
+      .results {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .result strong {
+        font-size: 19px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="container">
 
-<!-- Background Particles -->
-<div class="bg-particles" id="particles"></div>
-
-<div class="container" id="app">
-  <!-- HEADER -->
-  <div class="header">
-    <div class="day-section">
-      <span class="day-badge" id="dayBadge">Hari 1</span>
-      <span class="day-total" id="dayTotal">/ 40</span>
+    <!-- BRAND / HEADER -->
+    <div class="brand">
+      <div class="brand-icon">✦</div>
+      <div class="brand-text">
+        <h1>Cahya Mirip Nnael</h1>
+        <div class="sub">Worker Income Calculator</div>
+      </div>
     </div>
-    <div class="nav-group">
-      <button class="nav-btn" onclick="changeDay(-1)" title="Hari sebelumnya"><i class="fas fa-chevron-left"></i></button>
-      <button class="nav-btn" onclick="changeDay(1)" title="Hari berikutnya"><i class="fas fa-chevron-right"></i></button>
-      <button class="nav-btn danger" onclick="resetDay()" title="Reset hari ini"><i class="fas fa-undo-alt"></i></button>
+
+    <!-- MODE CARD -->
+    <div class="card">
+      <label>SISTEM PEMBAGIAN</label>
+      <select id="mode" onchange="render()">
+        <option value="one">1 Worker (70% Worker / 30% Admin)</option>
+        <option value="two">2 Worker 1 Order (42.5% / 42.5% / 15%)</option>
+        <option value="separate">2 Order Terpisah (70% / 30% masing-masing)</option>
+      </select>
     </div>
-  </div>
 
-  <!-- TIMELINE -->
-  <div class="timeline-mini" id="timeline"></div>
-
-  <!-- QUOTE -->
-  <div class="quote-box">
-    <span class="quote-icon"><i class="fas fa-quote-right"></i></span>
-    <i class="fas fa-quote-left" style="color:#fbbf24; margin-right:6px; opacity:0.5; font-size:12px;"></i>
-    <strong>1% lebih baik</strong> dari kemarin. Sedikit belajar, sedikit nulis, sedikit gerak.
-  </div>
-
-  <!-- TASK LIST -->
-  <div id="taskContainer"></div>
-
-  <!-- RULES -->
-  <div class="rules-box">
-    <div class="rule"><i class="fas fa-gamepad"></i> <strong>NO GAME</strong> sebelum target selesai.</div>
-    <div class="rule"><i class="fas fa-mobile-alt"></i> <strong>NO SCROLL</strong> tanpa tujuan.</div>
-    <div class="rule"><i class="fas fa-brain"></i> Kalah game → <strong>langsung keluar</strong>.</div>
-  </div>
-
-  <!-- PROGRESS -->
-  <div class="progress-wrap">
-    <div class="progress-stats">
-      <span class="done-text" id="progressText">0/22 selesai</span>
-      <span id="progressPercent">0%</span>
+    <!-- NAMES & ENTRIES CARD -->
+    <div class="card">
+      <div id="names"></div>
+      <h3 style="font-size:14px; font-weight:600; color:#b9c9e5; margin:12px 0 12px; letter-spacing:0.3px;">Daftar Bintang</h3>
+      <div id="entries"></div>
+      <button class="add" onclick="addEntry()">+ Tambah Bintang</button>
     </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill" style="width:0%;"></div>
+
+    <!-- RESULTS CARD -->
+    <div class="card">
+      <h3 style="font-size:14px; font-weight:600; color:#b9c9e5; margin-bottom:14px; letter-spacing:0.3px;">Hasil Pembagian</h3>
+      <div class="results">
+        <div class="result">
+          <small>Total Pendapatan</small>
+          <strong class="total" id="total">Rp0</strong>
+        </div>
+        <div class="result">
+          <small>Total Bintang</small>
+          <strong id="stars">0</strong>
+        </div>
+        <div class="result">
+          <small id="worker1label">Worker</small>
+          <strong class="worker" id="worker1">Rp0</strong>
+        </div>
+        <div class="result" id="worker2box">
+          <small id="worker2label">Worker 2</small>
+          <strong class="worker" id="worker2">Rp0</strong>
+        </div>
+        <div class="result">
+          <small>Admin</small>
+          <strong class="admin" id="admin">Rp0</strong>
+        </div>
+      </div>
+      <div class="summary" id="summary" style="margin-top:15px"></div>
     </div>
+
+    <!-- RESET -->
+    <button class="reset" onclick="resetAll()">↻ RESET SEMUA INPUT</button>
+
   </div>
 
-  <!-- BOTTOM -->
-  <div class="bottom-actions">
-    <button class="btn-primary" id="completeDayBtn" onclick="completeDay()">
-      <i class="fas fa-check-circle"></i> <span id="completeBtnText">Selesaikan Hari Ini</span>
-    </button>
-    <button class="btn-secondary danger" onclick="resetAll()" title="Reset semua progress">
-      <i class="fas fa-trash-alt"></i>
-    </button>
-  </div>
-</div>
+  <script>
+    // ----- PRICE TABLE -----
+    const prices = {
+      "Legend": 4000,
+      "Mawi": 6000,
+      "Honor": 7000,
+      "Glory": 8500,
+      "Immortal": 10500
+    };
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <span class="icon-big" id="modalIcon">🎉</span>
-    <h2 id="modalTitle">Hari 1 Selesai!</h2>
-    <div class="streak-count" id="modalStreak">🔥 Streak: 1 hari</div>
-    <p id="modalDesc">Kamu berhasil menyelesaikan semua target hari ini. <br>Terus bergerak maju, 1% setiap hari.</p>
-    <button class="btn-primary" onclick="closeModal()">
-      <i class="fas fa-arrow-right"></i> Lanjutkan
-    </button>
-  </div>
-</div>
+    // ----- STATE -----
+    let entries = [{ stars: "2", rank: "Glory", worker: "1" }];
 
-<!-- Confetti Container -->
-<div class="confetti-container" id="confettiContainer"></div>
+    // ----- HELPER: format Rupiah -----
+    const money = n => "Rp" + Math.round(n).toLocaleString("id-ID");
 
-<script>
-  // ============================================================
-  // DATA
-  // ============================================================
-  const TASK_CATEGORIES = [
-    { label: '🌅 PAGI', icon: 'fa-sun' },
-    { label: '💼 SAAT KERJA', icon: 'fa-briefcase' },
-    { label: '🚶 PULANG KERJA', icon: 'fa-home' },
-    { label: '🌙 MALAM — BANGUN MASA DEPAN', icon: 'fa-moon' },
-    { label: '🛏 SEBELUM TIDUR', icon: 'fa-bed' }
-  ];
+    // ----- ADD ENTRY -----
+    function addEntry() {
+      entries.push({ stars: "", rank: "Glory", worker: "1" });
+      render();
+    }
 
-  const TASKS = [
-    'Bangun tanpa snooze',
-    'Minum air + mandi',
-    'Rapikan tempat tidur',
-    'Stretching/olahraga 10–20 menit',
-    'Berangkat kerja tepat waktu',
-    'Fokus kerja',
-    'Jangan kebanyakan buka HP',
-    'Selesaikan pekerjaan dengan baik',
-    'Makan',
-    'Mandi',
-    'Istirahat 20–30 menit',
-    'Jangan langsung game',
-    '🇯🇵 Belajar Jepang 30 menit',
-    '✍️ Nulis novel/jurnal 30 menit',
-    '📖 Baca 10–20 halaman',
-    '💰 Catat pengeluaran hari ini',
-    '🚶 Jalan kaki/stretching',
-    '🎮 Game hanya setelah target utama selesai',
-    'Tulis 3 hal yang berhasil dilakukan',
-    'Tentukan 3 target besok',
-    'Jauhkan HP dari kasur',
-    'Tidur cukup'
-  ];
+    // ----- UPDATE ENTRY -----
+    function updateEntry(i, key, value) {
+      entries[i][key] = value;
+      calculate();
+    }
 
-  const CATEGORY_INDICES = [
-    { start: 0, end: 4 },
-    { start: 5, end: 7 },
-    { start: 8, end: 11 },
-    { start: 12, end: 17 },
-    { start: 18, end: 21 }
-  ];
-
-  const TOTAL_DAYS = 40;
-  const STORAGE_KEY = 'daily_list_40days_v2';
-
-  // ============================================================
-  // STATE
-  // ============================================================
-  let state = {
-    currentDay: 1,
-    days: {}
-  };
-
-  // ============================================================
-  // INIT
-  // ============================================================
-  function loadState() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        state.currentDay = parsed.currentDay || 1;
-        state.days = parsed.days || {};
-        if (!state.days[state.currentDay]) {
-          state.days[state.currentDay] = new Array(TASKS.length).fill(false);
-        }
-        return;
+    // ----- REMOVE ENTRY -----
+    function removeEntry(i) {
+      if (entries.length === 1) {
+        entries = [{ stars: "", rank: "Glory", worker: "1" }];
+      } else {
+        entries.splice(i, 1);
       }
-    } catch (e) {}
-    state.currentDay = 1;
-    state.days = {};
-    state.days[1] = new Array(TASKS.length).fill(false);
-  }
-
-  function saveState() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      currentDay: state.currentDay,
-      days: state.days
-    }));
-  }
-
-  function getTasksForDay(day) {
-    if (!state.days[day]) {
-      state.days[day] = new Array(TASKS.length).fill(false);
+      render();
     }
-    return state.days[day];
-  }
 
-  function getCurrentTasks() {
-    return getTasksForDay(state.currentDay);
-  }
+    // ----- RENDER UI -----
+    function render() {
+      const mode = document.getElementById("mode").value;
+      const names = document.getElementById("names");
+      const entriesBox = document.getElementById("entries");
 
-  function getDayStatus(day) {
-    const tasks = getTasksForDay(day);
-    const done = tasks.filter(v => v === true).length;
-    const total = TASKS.length;
-    if (done === total) return 'completed';
-    if (done > 0) return 'partial';
-    return 'empty';
-  }
-
-  // ============================================================
-  // PARTICLES
-  // ============================================================
-  function createParticles() {
-    const container = document.getElementById('particles');
-    for (let i = 0; i < 25; i++) {
-      const span = document.createElement('span');
-      span.style.left = Math.random() * 100 + '%';
-      span.style.animationDuration = (15 + Math.random() * 25) + 's';
-      span.style.animationDelay = (Math.random() * 20) + 's';
-      span.style.width = (2 + Math.random() * 4) + 'px';
-      span.style.height = span.style.width;
-      span.style.opacity = 0.1 + Math.random() * 0.2;
-      container.appendChild(span);
-    }
-  }
-  createParticles();
-
-  // ============================================================
-  // RENDER
-  // ============================================================
-  function render() {
-    const container = document.getElementById('taskContainer');
-    const tasks = getCurrentTasks();
-    const day = state.currentDay;
-
-    // Badge
-    document.getElementById('dayBadge').textContent = `Hari ${day}`;
-    document.getElementById('dayTotal').textContent = `/ ${TOTAL_DAYS}`;
-
-    // Timeline
-    renderTimeline();
-
-    // Tasks
-    let html = '';
-    TASK_CATEGORIES.forEach((cat, idx) => {
-      const { start, end } = CATEGORY_INDICES[idx];
-      html += `<div class="section-title"><i class="fas ${cat.icon}"></i> ${cat.label}<span class="line"></span></div>`;
-      html += `<div class="task-list">`;
-      for (let i = start; i <= end; i++) {
-        const checked = tasks[i] || false;
-        const label = TASKS[i];
-        const emojiMatch = label.match(/^([\u{1F000}-\u{1FFFF}]|[\u2600-\u27BF]|[\u{2700}-\u{27BF}]|[🇯🇵✍️📖💰🚶🎮🛏🌅💼🌙])/u);
-        const emoji = emojiMatch ? emojiMatch[0] : '';
-        const text = emoji ? label.replace(emoji, '').trim() : label;
-        const checkedClass = checked ? 'checked' : '';
-        const icon = checked ? 'fa-check' : 'fa-circle';
-        html += `
-          <div class="task-item ${checkedClass}" onclick="toggleTask(${i})">
-            <div class="task-check"><i class="fas ${icon}"></i></div>
-            <span class="task-label">${emoji ? `<span class="task-emoji">${emoji}</span>` : ''}${text}</span>
-            <span class="task-number">${i + 1}</span>
+      // --- Names section ---
+      if (mode === "one") {
+        names.innerHTML = `
+          <label>Nama Worker</label>
+          <input id="name1" value="Worker 1" oninput="calculate()">
+        `;
+      } else {
+        names.innerHTML = `
+          <div class="row-input" style="grid-template-columns: 1fr 1fr; margin-bottom: 4px;">
+            <div>
+              <label>Worker 1</label>
+              <input id="name1" value="Worker 1" oninput="calculate()">
+            </div>
+            <div>
+              <label>Worker 2</label>
+              <input id="name2" value="Worker 2" oninput="calculate()">
+            </div>
           </div>
         `;
       }
-      html += `</div>`;
-    });
-    container.innerHTML = html;
 
-    // Progress
-    const total = TASKS.length;
-    const done = tasks.filter(v => v === true).length;
-    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-    document.getElementById('progressText').textContent = `${done}/${total} selesai`;
-    document.getElementById('progressPercent').textContent = `${pct}%`;
-    document.getElementById('progressFill').style.width = `${pct}%`;
+      // --- Entries list ---
+      entriesBox.innerHTML = entries.map((e, i) => {
+        const workerSelector = (mode === "separate") ? `
+          <div style="grid-column: span 2;">
+            <label>Worker untuk order ini</label>
+            <select onchange="updateEntry(${i},'worker',this.value)">
+              <option value="1" ${e.worker === "1" ? "selected" : ""}>Worker 1</option>
+              <option value="2" ${e.worker === "2" ? "selected" : ""}>Worker 2</option>
+            </select>
+          </div>
+        ` : "";
 
-    // Complete button
-    const btn = document.getElementById('completeDayBtn');
-    const btnText = document.getElementById('completeBtnText');
-    const allDone = done === total;
-    btn.disabled = !allDone;
-    if (allDone) {
-      btnText.textContent = `✅ Hari ${day} Selesai!`;
-    } else {
-      btnText.textContent = 'Selesaikan Hari Ini';
+        return `
+          <div class="row-input">
+            <div>
+              <label>Bintang #${i + 1}</label>
+              <input type="number" min="0" placeholder="Jumlah"
+                value="${e.stars}"
+                oninput="updateEntry(${i},'stars',this.value)">
+            </div>
+            <div>
+              <label>Rank</label>
+              <select onchange="updateEntry(${i},'rank',this.value)">
+                ${Object.keys(prices).map(r =>
+                  `<option value="${r}" ${e.rank === r ? 'selected' : ''}>${r} - ${money(prices[r])}</option>`
+                ).join("")}
+              </select>
+            </div>
+            ${workerSelector}
+            <button class="remove" onclick="removeEntry(${i})">Hapus</button>
+          </div>
+        `;
+      }).join("");
+
+      // --- Toggle worker2 visibility ---
+      document.getElementById("worker2box").classList.toggle("hidden", mode === "one");
+
+      // --- Recalculate ---
+      calculate();
     }
 
-    saveState();
-  }
+    // ----- CALCULATE -----
+    function calculate() {
+      const mode = document.getElementById("mode").value;
+      const name1 = document.getElementById("name1")?.value || "Worker 1";
+      const name2 = document.getElementById("name2")?.value || "Worker 2";
 
-  function renderTimeline() {
-    const container = document.getElementById('timeline');
-    let html = '';
-    for (let i = 1; i <= TOTAL_DAYS; i++) {
-      const status = getDayStatus(i);
-      const isActive = i === state.currentDay;
-      let cls = 'day-dot';
-      if (isActive) cls += ' active';
-      else if (status === 'completed') cls += ' completed';
-      else if (status === 'partial') cls += ' partial';
-      html += `<div class="${cls}" onclick="goToDay(${i})" title="Hari ${i}">${i}</div>`;
+      let total = 0, stars = 0, w1 = 0, w2 = 0, admin = 0;
+      let detailLines = [];
+
+      entries.forEach(e => {
+        const s = Math.max(0, Number(e.stars) || 0);
+        const amount = s * prices[e.rank];
+        total += amount;
+        stars += s;
+        detailLines.push({ s, rank: e.rank, amount });
+
+        if (mode === "one") {
+          w1 += amount * 0.70;
+          admin += amount * 0.30;
+        } else if (mode === "two") {
+          w1 += amount * 0.425;
+          w2 += amount * 0.425;
+          admin += amount * 0.15;
+        } else {
+          if (e.worker === "1") {
+            w1 += amount * 0.70;
+            admin += amount * 0.30;
+          } else {
+            w2 += amount * 0.70;
+            admin += amount * 0.30;
+          }
+        }
+      });
+
+      // --- Update DOM ---
+      document.getElementById("total").textContent = money(total);
+      document.getElementById("stars").textContent = stars + " bintang";
+      document.getElementById("worker1label").textContent = name1;
+      document.getElementById("worker1").textContent = money(w1);
+      document.getElementById("worker2label").textContent = name2;
+      document.getElementById("worker2").textContent = money(w2);
+      document.getElementById("admin").textContent = money(admin);
+
+      // --- Build summary with clean layout ---
+      const detailHtml = detailLines.length > 0
+        ? detailLines.map(d =>
+            `<div class="detail-item"><span>${d.s} bintang ${d.rank}</span><span>${money(d.amount)}</span></div>`
+          ).join("")
+        : `<div style="color:#7a8aa8; font-style:italic;">Belum ada bintang</div>`;
+
+      document.getElementById("summary").innerHTML = `
+        <b style="font-size:12px; text-transform:uppercase; letter-spacing:0.4px; color:#9fb0cc;">Rincian</b>
+        <div style="margin:6px 0 10px;">${detailHtml}</div>
+        <div style="display:flex; justify-content:space-between; border-top:1px solid #31415e; padding-top:10px; margin-top:4px;">
+          <span style="color:#9fb0cc;">Total pembagian</span>
+          <span style="color:#e0e8ff; font-weight:600;">${money(w1 + w2 + admin)}</span>
+        </div>
+      `;
     }
-    container.innerHTML = html;
-  }
 
-  // ============================================================
-  // ACTIONS
-  // ============================================================
-  function toggleTask(index) {
-    const tasks = getCurrentTasks();
-    tasks[index] = !tasks[index];
-    render();
-  }
-
-  function changeDay(delta) {
-    let newDay = state.currentDay + delta;
-    if (newDay < 1) newDay = 1;
-    if (newDay > TOTAL_DAYS) newDay = TOTAL_DAYS;
-    state.currentDay = newDay;
-    if (!state.days[state.currentDay]) {
-      state.days[state.currentDay] = new Array(TASKS.length).fill(false);
-    }
-    render();
-  }
-
-  function goToDay(day) {
-    state.currentDay = day;
-    if (!state.days[state.currentDay]) {
-      state.days[state.currentDay] = new Array(TASKS.length).fill(false);
-    }
-    render();
-  }
-
-  function resetDay() {
-    if (confirm(`Reset semua checklist untuk Hari ${state.currentDay}?`)) {
-      state.days[state.currentDay] = new Array(TASKS.length).fill(false);
+    // ----- RESET -----
+    function resetAll() {
+      if (!confirm("Yakin ingin menghapus semua input?")) return;
+      entries = [{ stars: "", rank: "Glory", worker: "1" }];
       render();
     }
-  }
 
-  function getStreak() {
-    let streak = 0;
-    for (let i = 1; i <= TOTAL_DAYS; i++) {
-      if (getDayStatus(i) === 'completed') {
-        streak++;
-      } else {
-        break;
-      }
-    }
-    return streak;
-  }
-
-  function completeDay() {
-    const tasks = getCurrentTasks();
-    const done = tasks.filter(v => v === true).length;
-    if (done !== TASKS.length) {
-      alert('Selesaikan semua target dulu!');
-      return;
-    }
-
-    const day = state.currentDay;
-    const streak = getStreak();
-
-    // Show modal
-    document.getElementById('modalIcon').textContent = day === TOTAL_DAYS ? '🏆' : '🎉';
-    document.getElementById('modalTitle').textContent = day === TOTAL_DAYS ? '🎊 40 Hari Penuh!' : `Hari ${day} Selesai!`;
-    document.getElementById('modalStreak').textContent = `🔥 Streak: ${streak} hari`;
-    document.getElementById('modalDesc').innerHTML = `
-      ${day === TOTAL_DAYS ? 
-        'Selamat! Kamu menyelesaikan 40 hari penuh. <br>Kamu adalah versi terbaik dari dirimu.' :
-        `Kamu berhasil menyelesaikan semua target hari ini.<br><strong style="color:#fbbf24;">1% lebih baik dari kemarin.</strong><br><br>${day < TOTAL_DAYS ? `Besok lanjut ke <strong>Hari ${day + 1}</strong>.` : ''}`
-      }
-    `;
-    document.getElementById('modalOverlay').classList.add('active');
-
-    // Confetti!
-    launchConfetti();
-
-    // Auto next day
-    window._pendingDay = (day < TOTAL_DAYS) ? day + 1 : day;
-  }
-
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('active');
-    const nextDay = window._pendingDay || state.currentDay;
-    if (nextDay !== state.currentDay) {
-      state.currentDay = nextDay;
-      if (!state.days[state.currentDay]) {
-        state.days[state.currentDay] = new Array(TASKS.length).fill(false);
-      }
-    }
+    // ----- INIT -----
     render();
-  }
-
-  function resetAll() {
-    if (confirm('Yakin mau reset SEMUA progress dari hari 1 sampai 40?')) {
-      state.days = {};
-      state.currentDay = 1;
-      state.days[1] = new Array(TASKS.length).fill(false);
-      render();
-    }
-  }
-
-  // ============================================================
-  // CONFETTI
-  // ============================================================
-  function launchConfetti() {
-    const container = document.getElementById('confettiContainer');
-    const colors = ['#fbbf24', '#f59e0b', '#ef4444', '#3b82f6', '#8b5cf6', '#ec4899', '#22d3ee', '#34d399'];
-    const shapes = ['■', '●', '▲', '★', '♦'];
-
-    for (let i = 0; i < 60; i++) {
-      const el = document.createElement('div');
-      el.className = 'confetti';
-      el.textContent = shapes[Math.floor(Math.random() * shapes.length)];
-      el.style.left = Math.random() * 100 + '%';
-      el.style.color = colors[Math.floor(Math.random() * colors.length)];
-      el.style.fontSize = (6 + Math.random() * 12) + 'px';
-      el.style.animationDuration = (2 + Math.random() * 3) + 's';
-      el.style.animationDelay = (Math.random() * 1.5) + 's';
-      el.style.opacity = 0.7 + Math.random() * 0.3;
-      container.appendChild(el);
-
-      setTimeout(() => el.remove(), 5000);
-    }
-  }
-
-  // ============================================================
-  // KEYBOARD
-  // ============================================================
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') changeDay(-1);
-    if (e.key === 'ArrowRight') changeDay(1);
-    if (e.key === 'Enter' && !document.getElementById('modalOverlay').classList.contains('active')) {
-      const btn = document.getElementById('completeDayBtn');
-      if (!btn.disabled) completeDay();
-    }
-  });
-
-  // ============================================================
-  // BOOT
-  // ============================================================
-  loadState();
-  render();
-
-  // Close modal on overlay click
-  document.getElementById('modalOverlay').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
-</script>
+  </script>
 </body>
 </html>
