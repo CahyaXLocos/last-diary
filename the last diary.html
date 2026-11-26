@@ -17,7 +17,6 @@
 
     :root {
       --bg: #f7f3ee;
-      --bg-2: #efe8df;
       --card: rgba(255, 255, 255, 0.75);
       --card-solid: #ffffff;
       --card-soft: rgba(252, 249, 245, 0.9);
@@ -27,7 +26,6 @@
       --text-dim: #8a7d6f;
       --text-soft: #5f5448;
       --accent: #c98a4b;
-      --accent-2: #e0b47c;
       --accent-glow: rgba(201, 138, 75, 0.22);
       --green: #5f9e6b;
       --green-soft: #e6f0e7;
@@ -39,7 +37,6 @@
       --radius-sm: 12px;
       --shadow: 0 4px 20px -8px rgba(90, 70, 50, 0.12), 0 2px 8px -4px rgba(90, 70, 50, 0.08);
       --shadow-hover: 0 12px 32px -12px rgba(90, 70, 50, 0.22), 0 4px 12px -6px rgba(90, 70, 50, 0.12);
-      --shadow-glow: 0 8px 28px -8px rgba(201, 138, 75, 0.35);
       --transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
       --spring: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -94,23 +91,11 @@
       border: 1px solid rgba(217, 195, 168, 0.8);
       color: #a87a44;
       transition: var(--spring);
-      position: relative;
-    }
-
-    .brand-icon::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 18px;
-      background: linear-gradient(145deg, transparent 40%, rgba(255, 255, 255, 0.6));
-      pointer-events: none;
+      animation: float 4s ease-in-out infinite;
     }
 
     .brand-icon:hover {
       transform: rotate(-6deg) scale(1.06);
-      box-shadow:
-        0 12px 26px -8px rgba(180, 140, 90, 0.4),
-        inset 0 1px 2px rgba(255, 255, 255, 0.9);
     }
 
     .brand-text h1 {
@@ -144,7 +129,7 @@
       border-radius: 2px;
     }
 
-    /* ----- CARD (GLASSMORPHISM) ----- */
+    /* ----- CARD ----- */
     .card {
       background: var(--card);
       backdrop-filter: blur(14px);
@@ -156,12 +141,12 @@
       box-shadow: var(--shadow);
       transition: var(--transition);
       animation: fadeSlide 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-      position: relative;
     }
 
     .card:nth-child(2) { animation-delay: 0.08s; }
     .card:nth-child(3) { animation-delay: 0.16s; }
     .card:nth-child(4) { animation-delay: 0.24s; }
+    .card:nth-child(5) { animation-delay: 0.32s; }
 
     .card:hover {
       border-color: var(--border-strong);
@@ -284,7 +269,6 @@
       border-color: rgba(201, 107, 92, 0.5);
       color: #b05a4a;
       transform: scale(1.03);
-      box-shadow: 0 4px 12px -4px rgba(201, 107, 92, 0.3);
     }
 
     .remove:active {
@@ -331,7 +315,6 @@
       border: 1px solid rgba(217, 168, 108, 0.6);
       margin-top: 8px;
       letter-spacing: 0.4px;
-      text-shadow: 0 1px 2px rgba(150, 100, 50, 0.2);
     }
 
     .add:hover {
@@ -341,6 +324,26 @@
     }
 
     .add:active {
+      transform: translateY(0) scale(0.99);
+    }
+
+    .done {
+      background: linear-gradient(135deg, #6fb07b 0%, #5f9e6b 50%, #4f8a5b 100%);
+      color: #ffffff;
+      width: 100%;
+      box-shadow: 0 6px 20px -6px rgba(95, 158, 107, 0.45);
+      border: 1px solid rgba(111, 176, 123, 0.6);
+      letter-spacing: 0.4px;
+      margin-top: 8px;
+    }
+
+    .done:hover {
+      background: linear-gradient(135deg, #7fc08a 0%, #6fb07b 50%, #5f9e6b 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -8px rgba(95, 158, 107, 0.55);
+    }
+
+    .done:active {
       transform: translateY(0) scale(0.99);
     }
 
@@ -360,10 +363,31 @@
       border-color: var(--border-strong);
       color: var(--text);
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px -8px rgba(90, 70, 50, 0.2);
     }
 
     .reset:active {
+      transform: translateY(0);
+    }
+
+    .copy {
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--text-soft);
+      border: 1.5px solid var(--border);
+      font-weight: 600;
+      font-size: 13px;
+      padding: 11px 16px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+
+    .copy:hover {
+      background: #ffffff;
+      border-color: var(--border-strong);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .copy:active {
       transform: translateY(0);
     }
 
@@ -462,6 +486,196 @@
       font-variant-numeric: tabular-nums;
     }
 
+    /* ----- RECAP / HISTORY ----- */
+    .recap-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .recap-header h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-soft);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .today-total {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dim);
+      background: rgba(201, 138, 75, 0.1);
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(201, 138, 75, 0.2);
+    }
+
+    .today-total strong {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 380px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .history-item {
+      background: var(--card-solid);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      transition: var(--transition);
+      animation: fadeIn 0.35s ease both;
+    }
+
+    .history-item:hover {
+      border-color: var(--border-strong);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .history-item .hi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .history-item .hi-date {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .history-item .hi-date .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .history-item .hi-total {
+      font-size: 13px;
+      font-weight: 800;
+      color: #b67d3e;
+      background: rgba(201, 138, 75, 0.08);
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    .history-item .hi-details {
+      font-size: 12px;
+      color: var(--text-soft);
+      line-height: 1.8;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .history-item .hi-details .hi-row {
+      display: flex;
+      justify-content: space-between;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .history-item .hi-details .hi-row span:last-child {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .history-item .hi-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      justify-content: flex-end;
+    }
+
+    .hi-btn {
+      background: rgba(250, 246, 241, 0.8);
+      color: var(--text-soft);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .hi-btn:hover {
+      background: #ffffff;
+      border-color: var(--border-strong);
+      color: var(--text);
+    }
+
+    .hi-btn.danger {
+      background: var(--red-bg);
+      color: var(--red-soft);
+      border-color: rgba(201, 107, 92, 0.22);
+    }
+
+    .hi-btn.danger:hover {
+      background: #fce4de;
+      border-color: rgba(201, 107, 92, 0.5);
+      color: #b05a4a;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-dim);
+      font-size: 13px;
+      font-style: italic;
+      border: 1.5px dashed var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    /* ----- TOAST ----- */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--text);
+      color: #ffffff;
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      background: linear-gradient(135deg, #5f9e6b, #4f8a5b);
+    }
+
     /* ----- UTILITY ----- */
     .hidden {
       display: none !important;
@@ -490,26 +704,21 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
-    .result strong {
-      animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    /* Floating subtle animation for brand icon */
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-3px); }
     }
 
-    .brand-icon {
-      animation: float 4s ease-in-out infinite;
+    .result strong {
+      animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     /* ----- SCROLLBAR ----- */
     ::-webkit-scrollbar {
-      width: 10px;
+      width: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: var(--bg);
+      background: transparent;
     }
     ::-webkit-scrollbar-thumb {
       background: #d9cfc2;
@@ -557,6 +766,10 @@
       .result {
         padding: 16px 18px;
       }
+      .recap-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
 
     @media (max-width: 360px) {
@@ -572,7 +785,6 @@
       }
     }
 
-    /* Reduce motion for accessibility */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -637,6 +849,20 @@
         </div>
       </div>
       <div class="summary" id="summary" style="margin-top:15px"></div>
+      <button class="done" onclick="saveDone()">✓ DONE — Simpan ke Riwayat</button>
+    </div>
+
+    <!-- RECAP / HISTORY CARD -->
+    <div class="card">
+      <div class="recap-header">
+        <h3>Riwayat &amp; Rekap</h3>
+        <div class="today-total" id="todayTotal">Hari ini: <strong>Rp0</strong></div>
+      </div>
+      <div id="historyList" class="history-list"></div>
+      <div style="display:flex; gap:10px; margin-top:14px;">
+        <button class="copy" onclick="copyRecap()" style="flex:1;">📋 Salin Rekap Hari Ini</button>
+        <button class="copy" onclick="clearHistory()" style="flex:0.6;">🗑️ Hapus Riwayat</button>
+      </div>
     </div>
 
     <!-- RESET -->
@@ -644,8 +870,13 @@
 
   </div>
 
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
   <script>
-    // ----- PRICE TABLE -----
+    // ============================================================
+    //  PRICE TABLE
+    // ============================================================
     const prices = {
       "Legend": 4000,
       "Mawi": 6000,
@@ -654,25 +885,94 @@
       "Immortal": 10500
     };
 
-    // ----- STATE -----
+    // ============================================================
+    //  STATE
+    // ============================================================
     let entries = [{ stars: "2", rank: "Glory", worker: "1" }];
+    let history = []; // array of saved records
 
-    // ----- HELPER: format Rupiah -----
+    // ============================================================
+    //  LOCAL STORAGE
+    // ============================================================
+    const STORAGE_KEY = "cahya_nnael_history_v1";
+
+    function loadHistory() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        history = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(history)) history = [];
+      } catch (e) {
+        history = [];
+      }
+    }
+
+    function saveHistoryToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      } catch (e) {
+        showToast("Gagal menyimpan ke localStorage", "error");
+      }
+    }
+
+    // ============================================================
+    //  HELPER: money, date
+    // ============================================================
     const money = n => "Rp" + Math.round(n).toLocaleString("id-ID");
 
-    // ----- ADD ENTRY -----
+    function formatDate(iso) {
+      const d = new Date(iso);
+      const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+      const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+      const dayName = days[d.getDay()];
+      const dd = String(d.getDate()).padStart(2, "0");
+      const mm = months[d.getMonth()];
+      const yyyy = d.getFullYear();
+      const hh = String(d.getHours()).padStart(2, "0");
+      const mi = String(d.getMinutes()).padStart(2, "0");
+      return `${dayName}, ${dd} ${mm} ${yyyy} · ${hh}:${mi}`;
+    }
+
+    function todayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    }
+
+    function getTodayRecords() {
+      const key = todayKey();
+      return history.filter(h => h.dateKey === key);
+    }
+
+    function getTodayTotal() {
+      return getTodayRecords().reduce((sum, h) => sum + h.total, 0);
+    }
+
+    // ============================================================
+    //  TOAST
+    // ============================================================
+    let toastTimer = null;
+    function showToast(msg, type = "success") {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.className = "toast show " + type;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        t.className = "toast " + type;
+      }, 2600);
+    }
+
+    // ============================================================
+    //  ENTRY MANAGEMENT
+    // ============================================================
     function addEntry() {
       entries.push({ stars: "", rank: "Glory", worker: "1" });
       render();
     }
 
-    // ----- UPDATE ENTRY -----
     function updateEntry(i, key, value) {
       entries[i][key] = value;
       calculate();
     }
 
-    // ----- REMOVE ENTRY -----
     function removeEntry(i) {
       if (entries.length === 1) {
         entries = [{ stars: "", rank: "Glory", worker: "1" }];
@@ -682,7 +982,9 @@
       render();
     }
 
-    // ----- RENDER UI -----
+    // ============================================================
+    //  RENDER UI
+    // ============================================================
     function render() {
       const mode = document.getElementById("mode").value;
       const names = document.getElementById("names");
@@ -750,7 +1052,9 @@
       calculate();
     }
 
-    // ----- CALCULATE -----
+    // ============================================================
+    //  CALCULATE
+    // ============================================================
     function calculate() {
       const mode = document.getElementById("mode").value;
       const name1 = document.getElementById("name1")?.value || "Worker 1";
@@ -793,7 +1097,7 @@
       document.getElementById("worker2").textContent = money(w2);
       document.getElementById("admin").textContent = money(admin);
 
-      // --- Build summary with clean layout ---
+      // --- Build summary ---
       const detailHtml = detailLines.length > 0
         ? detailLines.map(d =>
             `<div class="detail-item"><span>${d.s} bintang ${d.rank}</span><span>${money(d.amount)}</span></div>`
@@ -808,17 +1112,245 @@
           <span style="color:var(--text); font-weight:800;">${money(w1 + w2 + admin)}</span>
         </div>
       `;
+
+      return { mode, name1, name2, total, stars, w1, w2, admin, detailLines };
     }
 
-    // ----- RESET -----
+    // ============================================================
+    //  DONE → SAVE TO HISTORY
+    // ============================================================
+    function saveDone() {
+      const data = calculate();
+
+      if (data.total <= 0) {
+        showToast("⚠️ Tidak ada pendapatan untuk disimpan", "error");
+        return;
+      }
+
+      const record = {
+        id: Date.now() + "-" + Math.random().toString(36).slice(2, 7),
+        iso: new Date().toISOString(),
+        dateKey: todayKey(),
+        mode: data.mode,
+        name1: data.name1,
+        name2: data.name2,
+        total: data.total,
+        stars: data.stars,
+        w1: data.w1,
+        w2: data.w2,
+        admin: data.admin,
+        details: data.detailLines
+      };
+
+      history.unshift(record); // newest first
+      saveHistoryToStorage();
+      renderHistory();
+
+      showToast("✓ Berhasil disimpan ke riwayat!", "success");
+    }
+
+    // ============================================================
+    //  RENDER HISTORY
+    // ============================================================
+    function renderHistory() {
+      const list = document.getElementById("historyList");
+      const todayTotalEl = document.getElementById("todayTotal");
+
+      // Update today's total
+      todayTotalEl.innerHTML = `Hari ini: <strong>${money(getTodayTotal())}</strong>`;
+
+      if (history.length === 0) {
+        list.innerHTML = `<div class="empty-state">Belum ada riwayat. Tekan tombol <b>DONE</b> untuk menyimpan hasil perhitungan.</div>`;
+        return;
+      }
+
+      list.innerHTML = history.map(h => {
+        const modeLabel =
+          h.mode === "one" ? "1 Worker" :
+          h.mode === "two" ? "2 Worker" :
+          "2 Order Terpisah";
+
+        const detailsHtml = h.details.map(d =>
+          `<div class="hi-row"><span>${d.s} bintang ${d.rank}</span><span>${money(d.amount)}</span></div>`
+        ).join("");
+
+        return `
+          <div class="history-item" data-id="${h.id}">
+            <div class="hi-top">
+              <div class="hi-date"><span class="dot"></span>${formatDate(h.iso)}</div>
+              <div class="hi-total">${money(h.total)}</div>
+            </div>
+            <div class="hi-details">
+              <div class="hi-row"><span>Mode</span><span>${modeLabel}</span></div>
+              <div class="hi-row"><span>${h.name1}</span><span>${money(h.w1)}</span></div>
+              ${h.mode !== "one" ? `<div class="hi-row"><span>${h.name2}</span><span>${money(h.w2)}</span></div>` : ""}
+              <div class="hi-row"><span>Admin</span><span>${money(h.admin)}</span></div>
+              <div style="margin-top:6px; padding-top:6px; border-top:1px dashed var(--border);">${detailsHtml}</div>
+            </div>
+            <div class="hi-actions">
+              <button class="hi-btn" onclick="copyOneRecord('${h.id}')">📋 Salin</button>
+              <button class="hi-btn danger" onclick="deleteRecord('${h.id}')">🗑️ Hapus</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // ============================================================
+    //  DELETE RECORD
+    // ============================================================
+    function deleteRecord(id) {
+      if (!confirm("Hapus riwayat ini?")) return;
+      history = history.filter(h => h.id !== id);
+      saveHistoryToStorage();
+      renderHistory();
+      showToast("Riwayat dihapus", "success");
+    }
+
+    // ============================================================
+    //  COPY FUNCTIONS
+    // ============================================================
+    function buildRecordText(h) {
+      const modeLabel =
+        h.mode === "one" ? "1 Worker" :
+        h.mode === "two" ? "2 Worker" :
+        "2 Order Terpisah";
+
+      let txt = `📋 REKAP CAHYA MIRIP NNAEL\n`;
+      txt += `📅 ${formatDate(h.iso)}\n`;
+      txt += `🎮 Mode: ${modeLabel}\n`;
+      txt += `━━━━━━━━━━━━━━━━━━\n`;
+
+      h.details.forEach(d => {
+        txt += `⭐ ${d.s} bintang ${d.rank} → ${money(d.amount)}\n`;
+      });
+
+      txt += `━━━━━━━━━━━━━━━━━━\n`;
+      txt += `💰 Total: ${money(h.total)}\n`;
+      txt += `👤 ${h.name1}: ${money(h.w1)}\n`;
+      if (h.mode !== "one") txt += `👤 ${h.name2}: ${money(h.w2)}\n`;
+      txt += `🏦 Admin: ${money(h.admin)}\n`;
+      txt += `⭐ Total Bintang: ${h.stars}\n`;
+
+      return txt;
+    }
+
+    function copyOneRecord(id) {
+      const h = history.find(x => x.id === id);
+      if (!h) return;
+      const txt = buildRecordText(h);
+      copyToClipboard(txt, "Rekap berhasil disalin!");
+    }
+
+    function copyRecap() {
+      const todayRecords = getTodayRecords();
+      if (todayRecords.length === 0) {
+        showToast("⚠️ Belum ada riwayat hari ini", "error");
+        return;
+      }
+
+      let txt = `╔══════════════════════════╗\n`;
+      txt += `   REKAP HARI INI — CAHYA MIRIP NNAEL\n`;
+      txt += `╚══════════════════════════╝\n`;
+      txt += `📅 ${formatDate(new Date().toISOString())}\n`;
+      txt += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+
+      let grandTotal = 0, grandW1 = 0, grandW2 = 0, grandAdmin = 0, grandStars = 0;
+
+      todayRecords.forEach((h, idx) => {
+        const modeLabel =
+          h.mode === "one" ? "1 Worker" :
+          h.mode === "two" ? "2 Worker" :
+          "2 Order Terpisah";
+
+        txt += `▸ Transaksi #${idx + 1} (${modeLabel})\n`;
+        h.details.forEach(d => {
+          txt += `   ⭐ ${d.s} ${d.rank} → ${money(d.amount)}\n`;
+        });
+        txt += `   💰 Total: ${money(h.total)}\n`;
+        txt += `   👤 ${h.name1}: ${money(h.w1)}\n`;
+        if (h.mode !== "one") txt += `   👤 ${h.name2}: ${money(h.w2)}\n`;
+        txt += `   🏦 Admin: ${money(h.admin)}\n\n`;
+
+        grandTotal += h.total;
+        grandW1 += h.w1;
+        grandW2 += h.w2;
+        grandAdmin += h.admin;
+        grandStars += h.stars;
+      });
+
+      txt += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+      txt += `📊 TOTAL HARI INI\n`;
+      txt += `   💰 Pendapatan: ${money(grandTotal)}\n`;
+      txt += `   ⭐ Bintang: ${grandStars}\n`;
+      txt += `   👤 ${todayRecords[0].name1}: ${money(grandW1)}\n`;
+      if (todayRecords.some(h => h.mode !== "one")) {
+        txt += `   👤 ${todayRecords.find(h => h.mode !== "one")?.name2 || "Worker 2"}: ${money(grandW2)}\n`;
+      }
+      txt += `   🏦 Admin: ${money(grandAdmin)}\n`;
+      txt += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+      txt += `✅ Total ${todayRecords.length} transaksi\n`;
+
+      copyToClipboard(txt, "Rekap hari ini berhasil disalin!");
+    }
+
+    function copyToClipboard(text, successMsg) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("✓ " + successMsg, "success");
+        }).catch(() => fallbackCopy(text, successMsg));
+      } else {
+        fallbackCopy(text, successMsg);
+      }
+    }
+
+    function fallbackCopy(text, successMsg) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand("copy");
+        showToast("✓ " + successMsg, "success");
+      } catch (e) {
+        showToast("Gagal menyalin", "error");
+      }
+      document.body.removeChild(ta);
+    }
+
+    // ============================================================
+    //  CLEAR ALL HISTORY
+    // ============================================================
+    function clearHistory() {
+      if (history.length === 0) {
+        showToast("Riwayat sudah kosong", "error");
+        return;
+      }
+      if (!confirm("Hapus SEMUA riwayat? Tindakan ini tidak bisa dibatalkan.")) return;
+      history = [];
+      saveHistoryToStorage();
+      renderHistory();
+      showToast("Semua riwayat dihapus", "success");
+    }
+
+    // ============================================================
+    //  RESET ALL INPUT
+    // ============================================================
     function resetAll() {
       if (!confirm("Yakin ingin menghapus semua input?")) return;
       entries = [{ stars: "", rank: "Glory", worker: "1" }];
       render();
+      showToast("Input direset", "success");
     }
 
-    // ----- INIT -----
+    // ============================================================
+    //  INIT
+    // ============================================================
+    loadHistory();
     render();
+    renderHistory();
   </script>
 </body>
 </html>
